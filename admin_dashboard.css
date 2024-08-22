@@ -1,0 +1,175 @@
+body {
+    background: url('background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.glass-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 40px;
+    width: 90vw;
+    max-width: 1000px;
+    /* height: 76vh;  */
+    height: fit-content;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-top: -5vh;
+}
+
+.title-block {
+    margin-bottom: 20px;
+}
+
+.logo {
+    height: 50px;
+}
+
+h1 {
+    color: #333;
+    font-size: 24px;
+}
+
+.dashboard-cards {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    flex-grow: 1;
+}
+
+.card {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
+    padding: 20px;
+    width: 30%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    height: 280px;
+    margin-right: 20px;
+}
+
+.card h2 {
+    color: #333;
+    font-size: 18px;
+}
+
+.card p {
+    font-size: 24px;
+    color: #333;
+}
+
+.card button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: rgba(194, 192, 192, 0.4);
+    color: rgb(41, 41, 41);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.card button:hover {
+    background-color: #bbb;
+    color: white;
+}
+
+.bottom-nav {
+    position: absolute;
+    border-radius: 20px;
+    justify-content: space-around;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.4);
+    padding: 15px 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    bottom: -7vh;
+    left: 0;
+    right: 0;
+}
+
+.bottom-nav button {
+    padding: 10px 20px;
+    background-color: rgba(255, 255, 255, 0.4);
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    width: 18%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-weight: bolder;
+}
+
+.bottom-nav button:hover {
+    background-color: #bbb;
+    color: white;
+}
+
+.bottom-nav button:focus {
+    background-color: #4d4d4d;
+    color: white;
+}
+
+.students-approval, .students-active {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.students-list {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.student-card {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
+    padding: 20px;
+    width: 30%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.student-card h3 {
+    font-size: 20px;
+    color: #333;
+}
+
+.student-card button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: rgba(194, 192, 192, 0.4);
+    color: rgb(41, 41, 41);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.student-card button:hover {
+    background-color: #bbb;
+    color: white;
+}
+
+.students-approval h2, .students-active h2 {
+    color: #333;
+    font-size: 24px;
+    text-align: left;
+    margin-left: 15px;
+}
+
+.active {
+    background-color: #4d4d4d;
+    color: rgb(35, 35, 35);
+}
