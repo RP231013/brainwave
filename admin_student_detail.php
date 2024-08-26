@@ -14,26 +14,26 @@ $result = mysqli_stmt_get_result($stmt);
 $student = mysqli_fetch_assoc($result);
 
 // Fetch student's subjects
-$sql_subjects = "SELECT Subjects.SubID, Subjects.subName FROM Subjects 
-                 JOIN TakingSubject ON Subjects.SubID = TakingSubject.SubID 
-                 WHERE TakingSubject.StuID = ?";
+$sql_subjects = "SELECT Subjects.subID, Subjects.subName FROM Subjects 
+                 JOIN TakingSubject ON Subjects.subID = TakingSubject.subID 
+                 WHERE TakingSubject.stuID = ?";
 $stmt_subjects = mysqli_prepare($link, $sql_subjects);
 mysqli_stmt_bind_param($stmt_subjects, "i", $student_id);
 mysqli_stmt_execute($stmt_subjects);
 $result_subjects = mysqli_stmt_get_result($stmt_subjects);
 $student_subjects = mysqli_fetch_all($result_subjects, MYSQLI_ASSOC);
 
-// Fetch student's marks from the marks table using mysqli
-$sql_marks = "SELECT Subjects.subName, marks.term, marks.mark
-              FROM marks
-              JOIN Subjects ON marks.SubID = Subjects.SubID
-              WHERE marks.StuID = ?";
-$stmt_marks = mysqli_prepare($link, $sql_marks);
-mysqli_stmt_bind_param($stmt_marks, "i", $student_id);
-mysqli_stmt_execute($stmt_marks);
-$result_marks = mysqli_stmt_get_result($stmt_marks);
-$marks = mysqli_fetch_all($result_marks, MYSQLI_ASSOC);
-
+// Fetch student's grades from the Grades table using mysqli
+$sql_grades = "SELECT Subjects.subName, Assignments.title, Grades.grade 
+               FROM Grades
+               JOIN Assignments ON Grades.assignmentID = Assignments.assignID
+               JOIN Subjects ON Grades.subID = Subjects.subID
+               WHERE Grades.stuID = ?";
+$stmt_grades = mysqli_prepare($link, $sql_grades);
+mysqli_stmt_bind_param($stmt_grades, "i", $student_id);
+mysqli_stmt_execute($stmt_grades);
+$result_grades = mysqli_stmt_get_result($stmt_grades);
+$grades = mysqli_fetch_all($result_grades, MYSQLI_ASSOC);
 
 // Handle form submission for saving edits
 if (isset($_POST['save_edits'])) {
@@ -43,12 +43,10 @@ if (isset($_POST['save_edits'])) {
     $gender = $_POST['gender'];
     $email = $_POST['email'];
 
-    $sql_update = "UPDATE students SET name = ?, surname = ?, gender = ?, email = ? WHERE StuID = ?";
+    $sql_update = "UPDATE students SET name = ?, surname = ?, gender = ?, email = ? WHERE stuID = ?";
     $stmt_update = mysqli_prepare($link, $sql_update);
     mysqli_stmt_bind_param($stmt_update, "ssssi", $name, $surname, $gender, $email, $student_id);
     mysqli_stmt_execute($stmt_update);
-
-
 
     // Redirect to show updated data
     header("Location: admin_student_detail.php?StuID=" . $student_id);
@@ -131,7 +129,7 @@ if (isset($_POST['save_edits'])) {
 <body>
     <div class="glass-container student-detail">
         <div class="title-block">
-            <h1>Admin Dashboard - Students</h1>
+            <h1>Admin Dashboard - Student Details</h1>
         </div>
 
         <form method="POST" action="admin_student_detail.php?StuID=<?php echo $student_id; ?>">
@@ -148,46 +146,33 @@ if (isset($_POST['save_edits'])) {
             <label for="email">Email:</label>
             <input type="email" name="email" value="<?php echo $student['email']; ?>" required>
 
-            <!-- Subject Selection as Dropdowns -->
             <button type="submit" name="save_edits">Save Edits</button>
         </form>
 
         <!-- Grades Table -->
         <div class="grades-table">
             <h2>Grades</h2>
-            <?php if (count($marks) > 0): ?>
+            <?php if (count($grades) > 0): ?>
                 <table>
                     <thead>
                         <tr>
                             <th>Subject</th>
-                            <th>Term 1</th>
-                            <th>Term 2</th>
-                            <th>Term 3</th>
-                            <th>Term 4</th>
+                            <th>Assignment Title</th>
+                            <th>Grade</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
-                        // Initialize an empty array to store subjects and their marks for each term
-                        $subject_grades = [];
-
-                        foreach ($marks as $mark) {
-                            $subject_grades[$mark['subName']]['T' . $mark['Term']] = $mark['Mark'];
-                        }
-
-                        foreach ($subject_grades as $subject_name => $grades): ?>
+                        <?php foreach ($grades as $grade): ?>
                             <tr>
-                                <td><?php echo $subject_name; ?></td>
-                                <td><?php echo $grades['T1'] ?? '-'; ?></td>
-                                <td><?php echo $grades['T2'] ?? '-'; ?></td>
-                                <td><?php echo $grades['T3'] ?? '-'; ?></td>
-                                <td><?php echo $grades['T4'] ?? '-'; ?></td>
+                                <td><?php echo htmlspecialchars($grade['subName']); ?></td>
+                                <td><?php echo htmlspecialchars($grade['title']); ?></td>
+                                <td><?php echo htmlspecialchars($grade['grade']); ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
             <?php else: ?>
-                <p>No grade data yet.</p>
+                <p>No grade data available yet.</p>
             <?php endif; ?>
         </div>
     </div>

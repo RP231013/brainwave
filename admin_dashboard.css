@@ -100,7 +100,7 @@ h1 {
 
 .bottom-nav button {
     padding: 10px 20px;
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(255, 255, 255, 0.4) !important;
     border: none;
     border-radius: 20px;
     cursor: pointer;
@@ -130,7 +130,7 @@ h1 {
     flex-wrap: wrap;
 }
 
-.student-card {
+.student-card .teacher-card {
     background-color: rgba(255, 255, 255, 0.3);
     border-radius: 15px;
     padding: 20px;
@@ -140,12 +140,12 @@ h1 {
     margin-bottom: 20px;
 }
 
-.student-card h3 {
+.student-card h3, .teacher-card h3 {
     font-size: 20px;
     color: #333;
 }
 
-.student-card button {
+.student-card button, .teacher-card button {
     margin-top: 10px;
     padding: 10px 20px;
     background-color: rgba(194, 192, 192, 0.4);
@@ -157,7 +157,7 @@ h1 {
     margin-bottom: 10px;
 }
 
-.student-card button:hover {
+.student-card button:hover, .teacher-card button:hover {
     background-color: #bbb;
     color: white;
 }
@@ -172,4 +172,31 @@ h1 {
 .active {
     background-color: #4d4d4d;
     color: rgb(35, 35, 35);
+}
+
+.scrollable-container {
+    max-height: 30vh !important; 
+    overflow-y: auto; 
+    margin-top: 20px;
+}
+
+.scrollable-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.scrollable-container th, 
+.scrollable-container td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.scrollable-container th {
+    background-color: #007bff;
+    color: white;
+}
+
+.scrollable-container td {
+    background-color: rgba(255, 255, 255, 0.8);
 }
