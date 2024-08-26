@@ -10,10 +10,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
     
-    // Extract the domain from the email
+    // get domain name for user type checking
     $email_domain = substr(strrchr($email, "@"), 1);
 
-    // Case 1: Admin login
+    // if admin
     if ($email_domain == "adminbrainwave.com") {
         $sql = "SELECT adminID, adminPassword FROM Admins WHERE adminEmail = ?";
         
@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             $_SESSION["loggedin"] = true;
                             $_SESSION["userID"] = $userID;
 
-                            // Redirect to the admin dashboard
+                            //go to admin dashboard
                             header("Location: admin_dashboard.php");
                             exit;
                         } else {
@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Case 2: Student login
+    // if student
     elseif ($email_domain == "studentbrainwave.com") {
         $sql = "SELECT stuID, password FROM Students WHERE email = ?";
         
@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             $_SESSION["loggedin"] = true;
                             $_SESSION["userID"] = $userID;
 
-                            // Redirect to the student dashboard
+                            // go to student dashboard
                             header("Location: student_dashboard.php");
                             exit;
                         } else {
@@ -85,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Case 3: Teacher login
+    // if teacher
     elseif ($email_domain == "teacherbrainwave.com") {
         $sql = "SELECT teachID, password FROM Teachers WHERE email = ?";
         
@@ -102,9 +102,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         if (password_verify($password, $hashed_password)) {
                             session_start();
                             $_SESSION["loggedin"] = true;
-                            $_SESSION["userID"] = $userID;
+                            $_SESSION['teachID'] = $userID;
 
-                            // Redirect to the teacher dashboard
+                            // go to teach dash
                             header("Location: teacher_dashboard.php");
                             exit;
                         } else {
@@ -121,7 +121,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Case 4: Invalid email domain
+    // invalid email
     else {
         echo "Invalid email domain.";
     }

@@ -1,11 +1,11 @@
 <?php
-// admin_student_detail.php
 
 require_once 'config.php'; 
 
-$student_id = $_GET['StuID']; // Get student ID from the URL
+// gets student ID from the URL
+$student_id = $_GET['StuID']; 
 
-// Fetch student details using mysqli
+// gets student details 
 $sql = "SELECT * FROM students WHERE StuID = ?";
 $stmt = mysqli_prepare($link, $sql);
 mysqli_stmt_bind_param($stmt, "i", $student_id);
@@ -13,7 +13,7 @@ mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 $student = mysqli_fetch_assoc($result);
 
-// Fetch student's subjects
+// get student subjects
 $sql_subjects = "SELECT Subjects.subID, Subjects.subName FROM Subjects 
                  JOIN TakingSubject ON Subjects.subID = TakingSubject.subID 
                  WHERE TakingSubject.stuID = ?";
@@ -23,7 +23,7 @@ mysqli_stmt_execute($stmt_subjects);
 $result_subjects = mysqli_stmt_get_result($stmt_subjects);
 $student_subjects = mysqli_fetch_all($result_subjects, MYSQLI_ASSOC);
 
-// Fetch student's grades from the Grades table using mysqli
+// get grades from the Grades table 
 $sql_grades = "SELECT Subjects.subName, Assignments.title, Grades.grade 
                FROM Grades
                JOIN Assignments ON Grades.assignmentID = Assignments.assignID
@@ -35,9 +35,9 @@ mysqli_stmt_execute($stmt_grades);
 $result_grades = mysqli_stmt_get_result($stmt_grades);
 $grades = mysqli_fetch_all($result_grades, MYSQLI_ASSOC);
 
-// Handle form submission for saving edits
+// form for saving edits
 if (isset($_POST['save_edits'])) {
-    // Update personal information
+    // update personal information
     $name = $_POST['name'];
     $surname = $_POST['surname'];
     $gender = $_POST['gender'];
@@ -48,7 +48,7 @@ if (isset($_POST['save_edits'])) {
     mysqli_stmt_bind_param($stmt_update, "ssssi", $name, $surname, $gender, $email, $student_id);
     mysqli_stmt_execute($stmt_update);
 
-    // Redirect to show updated data
+    // refresh to show updated data
     header("Location: admin_student_detail.php?StuID=" . $student_id);
     exit;
 }

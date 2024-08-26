@@ -52,9 +52,9 @@
                 </select>
             </div>
 
-            <!-- Right Column: Subjects -->
+            
             <div class="right-column">
-                <!-- Student Form -->
+                
                 <div id="student-form" style="display:none;">
                     <h3>Select Subjects (Select at least 7)</h3>
                     <?php
@@ -73,11 +73,11 @@
                     ?>
                 </div>
 
-                <!-- Teacher Form -->
+                
                 <div id="teacher-form" style="display:none;">
                     <h3>Select Subjects You'll Be Teaching</h3>
                     <?php
-                    // Reuse the same subjects list for teachers
+                    
                     $result = mysqli_query($link, $sql);
 
                     if (mysqli_num_rows($result) > 0) {
@@ -88,14 +88,14 @@
                     ?>
                 </div>
 
-                <!-- Admin Form -->
+                
                 <div id="admin-form" style="display:block;">
                     <h3>Admin Registration</h3>
                     <p>No extra fields for admin users.</p>
                 </div>
             </div>
 
-            <!-- Submit Button -->
+            
             <div class="submit-row">
                 <button type="submit">Sign Up</button>
                 <p>Already have an account? <a href="index.php">Login</a></p>

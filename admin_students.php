@@ -2,17 +2,17 @@
 session_start();
 require_once "config.php";
 
-// Ensure the admin is logged in
+// cheacks if admin is logged in
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("location: index.php");
     exit;
 }
 
-// Fetch students waiting for approval and approved students
+// get students 
 $students_waiting_for_approval = [];
 $approved_students = [];
 
-// Fetch students who are not yet approved
+// get only unapproved students
 $sql_unapproved_students = "SELECT stuID, name, surname FROM Students WHERE approved = 0";
 if ($result = mysqli_query($link, $sql_unapproved_students)) {
     while ($row = mysqli_fetch_assoc($result)) {
@@ -21,7 +21,7 @@ if ($result = mysqli_query($link, $sql_unapproved_students)) {
     mysqli_free_result($result);
 }
 
-// Fetch approved students
+// get approved students
 $sql_approved_students = "SELECT stuID, name, surname FROM Students WHERE approved = 1";
 if ($result = mysqli_query($link, $sql_approved_students)) {
     while ($row = mysqli_fetch_assoc($result)) {
@@ -30,12 +30,12 @@ if ($result = mysqli_query($link, $sql_approved_students)) {
     mysqli_free_result($result);
 }
 
-// Handle approval or decline of students
+// deal with approval or decline of students
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['approve'])) {
         $student_id = $_POST['student_id'];
 
-        // Update the student's status to approved
+        // update the student status to approved
         $sql_approve = "UPDATE Students SET approved = 1 WHERE stuID = ?";
         if ($stmt = mysqli_prepare($link, $sql_approve)) {
             mysqli_stmt_bind_param($stmt, "i", $student_id);
@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     } elseif (isset($_POST['decline'])) {
         $student_id = $_POST['student_id'];
-        // Delete the student (this will cascade delete related records)
+        // delete the student (this will cascade delete related records)
         $sql_delete = "DELETE FROM Students WHERE stuID = ?";
         if ($stmt = mysqli_prepare($link, $sql_delete)) {
             mysqli_stmt_bind_param($stmt, "i", $student_id);
@@ -52,12 +52,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             mysqli_stmt_close($stmt);
         }
     }
-    // Refresh the page after action
+    // refresh 
     header("location: admin_students.php");
     exit;
 }
 
-// Close database connection
+// close connection
 mysqli_close($link);
 ?>
 

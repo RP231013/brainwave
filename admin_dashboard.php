@@ -2,13 +2,13 @@
 session_start();
 require_once "config.php";
 
-// Ensure the admin is logged in
+// checks if admin logged in
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("location: index.php");
     exit;
 }
 
-// Fetch counts for students and teachers awaiting approval and active users
+// gets counts of students etc.
 $unapproved_students_count = 0;
 $unapproved_teachers_count = 0;
 $approved_students_count = 0;
@@ -19,7 +19,7 @@ $sql_teachers = "SELECT COUNT(*) FROM Teachers WHERE approved = 0";
 $sql_approved_students = "SELECT COUNT(*) FROM Students WHERE approved = 1";
 $sql_approved_teachers = "SELECT COUNT(*) FROM Teachers WHERE approved = 1";
 
-// Get unapproved students count
+
 if ($stmt = mysqli_prepare($link, $sql_students)) {
     mysqli_stmt_execute($stmt);
     mysqli_stmt_bind_result($stmt, $unapproved_students_count);
@@ -27,7 +27,7 @@ if ($stmt = mysqli_prepare($link, $sql_students)) {
     mysqli_stmt_close($stmt);
 }
 
-// Get unapproved teachers count
+// gets unapproved teachers count
 if ($stmt = mysqli_prepare($link, $sql_teachers)) {
     mysqli_stmt_execute($stmt);
     mysqli_stmt_bind_result($stmt, $unapproved_teachers_count);
@@ -35,7 +35,7 @@ if ($stmt = mysqli_prepare($link, $sql_teachers)) {
     mysqli_stmt_close($stmt);
 }
 
-// Get approved students count
+// gets approved students count
 if ($stmt = mysqli_prepare($link, $sql_approved_students)) {
     mysqli_stmt_execute($stmt);
     mysqli_stmt_bind_result($stmt, $approved_students_count);
@@ -43,7 +43,7 @@ if ($stmt = mysqli_prepare($link, $sql_approved_students)) {
     mysqli_stmt_close($stmt);
 }
 
-// Get approved teachers count
+// gets approved teachers count
 if ($stmt = mysqli_prepare($link, $sql_approved_teachers)) {
     mysqli_stmt_execute($stmt);
     mysqli_stmt_bind_result($stmt, $approved_teachers_count);
@@ -51,7 +51,7 @@ if ($stmt = mysqli_prepare($link, $sql_approved_teachers)) {
     mysqli_stmt_close($stmt);
 }
 
-// Close database connection
+// close connection
 mysqli_close($link);
 ?>
 

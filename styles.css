@@ -17,8 +17,8 @@ body {
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     padding: 40px;
-    width: 70vw; /* Adjust width to ensure the form covers more area */
-    max-width: 1200px; /* Set a maximum width */
+    width: 70vw; 
+    max-width: 1200px; 
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
@@ -37,11 +37,11 @@ h1 {
     font-size: 24px;
 }
 
-/* Use grid layout for the form */
+
 .glass-form {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Two equal-width columns */
-    gap: 20px; /* Space between columns */
+    grid-template-columns: 1fr 1fr; 
+    gap: 20px; 
     width: 100%;
 }
 

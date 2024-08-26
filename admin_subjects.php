@@ -2,13 +2,13 @@
 session_start();
 require_once "config.php";
 
-// Ensure the admin is logged in
+//  admin logged in (session)
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("location: index.php");
     exit;
 }
 
-// Handle adding a new subject
+//  adding a new subject
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_subject'])) {
     $sub_name = mysqli_real_escape_string($link, $_POST['sub_name']);
     $sub_code = strtoupper(substr($sub_name, 0, 2) . substr($sub_name, 3, 1)); // Generate subCode
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_subject'])) {
     }
 }
 
-// Handle deletion of a subject (cascade delete)
+//  deletion of a subject (cascade delete)
 if (isset($_GET['delete_id'])) {
     $sub_id = $_GET['delete_id'];
 
@@ -183,7 +183,7 @@ mysqli_close($link);
             </table>
         </div>
 
-        <!-- Add Subject Form -->
+        
         <div class="add-subject-form">
             <h2>Add a New Subject</h2>
             <form method="POST" action="admin_subjects.php">

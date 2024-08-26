@@ -2,17 +2,17 @@
 session_start();
 require_once "config.php";
 
-// Ensure the admin is logged in
+//  admin logged in (session)
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("location: index.php");
     exit;
 }
 
-// Fetch teachers waiting for approval and approved teachers
+// get teachers
 $teachers_waiting_for_approval = [];
 $approved_teachers = [];
 
-// Fetch unapproved teachers
+// get unapproved teachers
 $sql_unapproved_teachers = "SELECT teachID, name, surname FROM Teachers WHERE approved = 0";
 if ($result = mysqli_query($link, $sql_unapproved_teachers)) {
     while ($row = mysqli_fetch_assoc($result)) {
@@ -21,7 +21,7 @@ if ($result = mysqli_query($link, $sql_unapproved_teachers)) {
     mysqli_free_result($result);
 }
 
-// Fetch approved teachers and their subjects
+// get approved teachers and their subjects
 $sql_approved_teachers = "
     SELECT Teachers.teachID, Teachers.name, Teachers.surname, GROUP_CONCAT(Subjects.subName SEPARATOR ', ') AS subjects
     FROM Teachers
@@ -37,12 +37,12 @@ if ($result = mysqli_query($link, $sql_approved_teachers)) {
     mysqli_free_result($result);
 }
 
-// Handle approval or decline of teachers
+//  approval or decline of teachers
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['approve'])) {
         $teacher_id = $_POST['teacher_id'];
 
-        // Update the teacher's status to approved
+        //  set teacher to approeved
         $sql_approve = "UPDATE Teachers SET approved = 1 WHERE teachID = ?";
         if ($stmt = mysqli_prepare($link, $sql_approve)) {
             mysqli_stmt_bind_param($stmt, "i", $teacher_id);
@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     } elseif (isset($_POST['decline'])) {
         $teacher_id = $_POST['teacher_id'];
-        // Delete the teacher
+        // delete the teacher
         $sql_delete = "DELETE FROM Teachers WHERE teachID = ?";
         if ($stmt = mysqli_prepare($link, $sql_delete)) {
             mysqli_stmt_bind_param($stmt, "i", $teacher_id);
@@ -61,12 +61,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Refresh the page after action
+    // refresh
     header("location: admin_teachers.php");
     exit;
 }
 
-// Close database connection
+// close connection
 mysqli_close($link);
 ?>
 

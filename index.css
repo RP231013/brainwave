@@ -16,10 +16,10 @@ body {
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     padding: 40px;
-    width: 50vw; /* Adjust width */
+    width: 50vw; 
     max-width: 800px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    text-align: center; /* Center content */
+    text-align: center; 
 }
 
 h1 {
@@ -30,7 +30,7 @@ h1 {
 
 form {
     display: flex;
-    flex-direction: column; /* Stack items vertically */
+    flex-direction: column; 
     align-items: center;
 }
 
