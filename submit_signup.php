@@ -38,6 +38,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         }
                     }
                 }
+
+
+                // checks if there are assignments and creates empty grade sets
+                foreach ($_POST['subjects'] as $subject_id) {
+
+
+                    $sql_assignments = "SELECT assignID FROM Assignments WHERE subID = ?";
+                    if ($stmt_assignments = mysqli_prepare($link, $sql_assignments)) {
+                        mysqli_stmt_bind_param($stmt_assignments, "i", $subject_id);
+                        mysqli_stmt_execute($stmt_assignments);
+                        $result_assignments = mysqli_stmt_get_result($stmt_assignments);
+                
+                        
+                        while ($assignment = mysqli_fetch_assoc($result_assignments)) {
+                            $assignID = $assignment['assignID'];
+                            $sql_insert_grade = "INSERT INTO Grades (stuID, assignmentID, subID, grade) VALUES (?, ?, ?, 0)";
+                            if ($stmt_grade = mysqli_prepare($link, $sql_insert_grade)) {
+                                mysqli_stmt_bind_param($stmt_grade, "iii", $student_id, $assignID, $subject_id);
+                                mysqli_stmt_execute($stmt_grade);
+                            }
+                        }
+                        mysqli_stmt_close($stmt_assignments);
+                    }
+                }
+
                 // redirect
                 $_SESSION['email'] = $email;
                 header("Location: student_dashboard.php");
