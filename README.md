@@ -68,6 +68,8 @@ http://localhost/brainwave
 ### Student Functionality:
 - View Grades: Students can view their grades for all assignments across subjects in a visual chart format.
 
+## ERD 
+![ERD](mockups/bwERD.png)
 
 ## Credits
 - Chart.js: Used for dynamic graph generation for student grades.

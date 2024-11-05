@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
     <link rel="stylesheet" href="styles.css">
+    
     <script>
         function toggleUserType() {
             var userType = document.getElementById('userType').value;
@@ -15,6 +16,7 @@
     </script>
 </head>
 <body>
+    
     <div class="glass-container">
 
         <div class="title-block">
